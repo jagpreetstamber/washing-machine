@@ -42,7 +42,7 @@ int stage = ZERO; // 0 - Wash Mode, 1 - Water Level, 2 - Wash Time, 3 - Rinse Ti
 int selectedWashMode = ZERO; // 0 - Wash + Rinse, 1 - Wash, 2 - Rinse
 int selectedWaterLevel = ONE; // 0 - Low, 1 - Medium, 2 - High
 int selectedWashTime = maxWashTime - 1; // In minutes
-int selectedRinseTime = maxRinseTime - 1; // In minutes
+int selectedRinseTime = THREE - 1; // In minutes
 boolean upDownButtonPressed = true;
 boolean selectButtonPressed = true;
 
