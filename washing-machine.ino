@@ -13,9 +13,9 @@ const char mediumStr[] = "Medium";
 const char highStr[] = "High";
 const char timeStr[] = "Time";
 const char minStr[] = "min";
-const char collonChar = ':';
-const char spaceChar = ' ';
-const char plusChar = '+';
+const char collonStr[] = ":";
+const char spaceStr[] = " ";
+const char plusStr[] = "+";
 
 const int noOfStages = 5;
 const int noOfWashModes = 3;
@@ -53,7 +53,7 @@ void loop() {
     upDownButtonPressed = true;
     delay(200);
   }
-  if (stage == noOfStages || stage == 0) {
+  if (stage == 0) {
     selectValue(&selectedWashMode, noOfWashModes);
     printWashMode();
   } else if (stage == 1) {
@@ -98,88 +98,93 @@ void selectValue(int *value, int numberOfValues) {
 void printWashMode() {
   const char *topRow[4] = {
     washStr,
-    &spaceChar,
+    spaceStr,
     modeStr,
-    &collonChar
+    collonStr
   };
   printTopRow(topRow, 4);
 
-  if (upDownButtonPressed) {
-    upDownButtonPressed = false;
-    clearRow(1);
-    lcd.setCursor(0, 1);
-    if (selectedWashMode == 0) {
-      lcd.print(washStr);
-      lcd.print(plusChar);
-      lcd.print(rinseStr);
-    } else if (selectedWashMode == 1) {
-      lcd.print(washStr);
-    } else if (selectedWashMode == 2) {
-      lcd.print(rinseStr);
-    }
+  if (selectedWashMode == 0) {
+    const char *bottomRow[3] = {
+      washStr,
+      plusStr,
+      rinseStr
+    };
+    printBottomRow(bottomRow, 3);
+  } else if (selectedWashMode == 1) {
+    const char *bottomRow[1] = {
+      washStr
+    };
+    printBottomRow(bottomRow, 1);
+  } else if (selectedWashMode == 2) {
+    const char *bottomRow[1] = {
+      rinseStr
+    };
+    printBottomRow(bottomRow, 1);
   }
 }
 
 void printWaterLevel() {
   const char *topRow[4] = {
     waterStr,
-    &spaceChar,
+    spaceStr,
     levelStr,
-    &collonChar
+    collonStr
   };
   printTopRow(topRow, 4);
 
-  if (upDownButtonPressed) {
-    upDownButtonPressed = false;
-    clearRow(1);
-    lcd.setCursor(0, 1);
-    if (selectedWaterLevel == 0) {
-      lcd.print(lowStr);
-    } else if (selectedWaterLevel == 1) {
-      lcd.print(mediumStr);
-    } else if (selectedWaterLevel == 2) {
-      lcd.print(highStr);
-    }
+  if (selectedWaterLevel == 0) {
+    const char *bottomRow[1] = {
+      lowStr
+    };
+    printBottomRow(bottomRow, 1);
+  } else if (selectedWaterLevel == 1) {
+    const char *bottomRow[1] = {
+      mediumStr
+    };
+    printBottomRow(bottomRow, 1);
+  } else if (selectedWaterLevel == 2) {
+    const char *bottomRow[1] = {
+      highStr
+    };
+    printBottomRow(bottomRow, 1);
   }
 }
 
 void printWashTime() {
   const char *topRow[4] = {
     washStr,
-    &spaceChar,
+    spaceStr,
     timeStr,
-    &collonChar
+    collonStr
   };
   printTopRow(topRow, 4);
 
-  if (upDownButtonPressed) {
-    upDownButtonPressed = false;
-    clearRow(1);
-    lcd.setCursor(0, 1);
-    lcd.print(selectedWashTime + 1);
-    lcd.write(spaceChar);
-    lcd.write(minStr);
-  }
+  char buffer[2];
+  const char *bottomRow[3] = {
+    itoa(selectedWashTime + 1, buffer, 10),
+    spaceStr,
+    minStr
+  };
+  printBottomRow(bottomRow, 3);
 }
 
 void printRinseTime() {
   const char *topRow[4] = {
     rinseStr,
-    &spaceChar,
+    spaceStr,
     timeStr,
-    &collonChar
+    collonStr
   };
   printTopRow(topRow, 4);
-  //  printBottomRow(text, 3);
-
-  if (upDownButtonPressed) {
-    upDownButtonPressed = false;
-    clearRow(1);
-    lcd.setCursor(0, 1);
-    lcd.print(selectedRinseTime + 1);
-    lcd.write(spaceChar);
-    lcd.write(minStr);
-  }
+  
+  char buffer[2];
+  const char *bottomRow[3] = {
+    itoa(selectedRinseTime + 1, buffer, 10),
+    spaceStr,
+    minStr
+  };
+  printBottomRow(bottomRow, 3);
 }
 
 void printTopRow(const char **text, int arraySize) {
@@ -209,7 +214,7 @@ void printRow(const char **text, int arraySize) {
 void clearRow(int row) {
   for (int  thisCol = 0; thisCol < noOfLcdColumns; thisCol++) {
     lcd.setCursor(thisCol, row);
-    lcd.write(spaceChar);
+    lcd.write(spaceStr);
   }
 }
 
