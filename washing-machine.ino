@@ -1,6 +1,6 @@
 #include <LiquidCrystal.h>
 
-LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
+LiquidCrystal lcd(12, 11, 10, 9, 8, 7, 6);
 
 const char washStr[] = "Wash";
 const char modeStr[] = "Mode";
@@ -157,7 +157,7 @@ void printWaterLevel() {
     };
     printBottomRow(bottomRow, ONE, SIX);
   } else if (selectedWaterLevel == ONE) {
-    const char *bottomRow[1] = {
+    const char *bottomRow[ONE] = {
       mediumStr
     };
     printBottomRow(bottomRow, ONE, FIVE);
