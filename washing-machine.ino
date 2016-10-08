@@ -15,6 +15,9 @@ const char timeStr[] = "Time";
 const char minStr[] = "min";
 const char fillingStr[] = "Filling Up";
 const char drainStr[] = "Draining";
+const char washingStr[] = "Washing";
+const char rinsingStr[] = "Rinsing";
+const char completeStr[] = "Complete";
 const char collonStr[] = ":";
 const char spaceStr[] = " ";
 const char plusStr[] = "+";
@@ -27,9 +30,9 @@ const int FOUR = 4;
 const int FIVE = 5;
 const int SIX = 6;
 
-const int noOfStages = 5;
-const int noOfWashModes = 3;
-const int noOfWaterLevel = 3;
+const int noOfStages = SIX;
+const int noOfWashModes = THREE;
+const int noOfWaterLevel = THREE;
 const int maxWashTime = 15;
 const int maxRinseTime = 5;
 const int noOfLcdColumns = 16;
@@ -46,7 +49,7 @@ const int midSensorPin = A4;
 const int highSensorPin = A3;
 const int drainSensorPin = A2;
 
-int stage = ZERO; // 0 - Wash Mode, 1 - Water Level, 2 - Wash Time, 3 - Rinse Time, 4 - Start
+int stage = ZERO; // 0 - Wash Mode, 1 - Water Level, 2 - Wash Time, 3 - Rinse Time, 4 - Start, 5 - Complete
 int selectedWashMode = ZERO; // 0 - Wash + Rinse, 1 - Wash, 2 - Rinse
 int selectedWaterLevel = ONE; // 0 - Low, 1 - Medium, 2 - High
 int selectedWashTime = maxWashTime - 1; // In minutes
@@ -75,9 +78,7 @@ void setup() {
 void loop() {
   int selectButtonState = digitalRead(selectButtonPin);
   if (selectButtonState == HIGH) {
-    stage  = ++stage % noOfStages;
-    selectButtonPressed = true;
-    upDownButtonPressed = true;
+    incrementStage();
     delay(200);
   }
 
@@ -89,40 +90,59 @@ void loop() {
     printWaterLevel();
   } else if (stage == TWO) {
     if (selectedWashMode == TWO) {
-      stage++;
+      incrementStage();
     } else {
       selectValue(&selectedWashTime, maxWashTime);
       printWashTime();
     }
   } else if (stage == THREE) {
     if (selectedWashMode == ONE) {
-      stage++;
+      incrementStage();
     } else {
       selectValue(&selectedRinseTime, maxRinseTime);
       printRinseTime();
     }
-  }
-  else if (stage == FOUR) {
+  } else if (stage == FOUR) {
     drainWater();
-    fillUpWater();
-
-    while(true);
+    if (selectedWashMode == ZERO || selectedWashMode == ONE) {
+      fillUpWater();
+      startCycle(selectedWashTime + 1, washingStr);
+    }
+    drainWater();
+    if (selectedWashMode == ZERO || selectedWashMode == TWO) {
+      fillUpWater();
+      startCycle(selectedRinseTime + 1, rinsingStr);
+    }
+    drainWater();
+    incrementStage();
+  } else if (stage == FIVE) {
+    if (selectButtonPressed) {
+      selectButtonPressed = false;
+      lcd.clear();
+      lcd.setCursor(TWO, ZERO);
+      lcd.print(washStr);
+      lcd.print(spaceStr);
+      lcd.print(completeStr);
+    }
   }
 }
 
-void startWashCycle() {
-  clearRow(ZERO);
-  clearRow(ONE);
-  lcd.setCursor(ONE, ZERO);
-  lcd.print(drainStr);
-  lcd.print(spaceStr);
-  lcd.print(waterStr);
-  while (digitalRead(drainSensorPin) == LOW) {
-    digitalWrite(waterDrainPin, HIGH);
-    delay(5000);
+void startCycle(int cycleTimeInMinutes, const char *type) {
+  lcd.clear();
+  lcd.setCursor(FIVE, ZERO);
+  lcd.print(type);
+
+  digitalWrite(motorControlPin, HIGH);
+  for (int cycleTimeLeft = cycleTimeInMinutes; cycleTimeLeft > 0; cycleTimeLeft--) {
+    clearRow(ONE);
+    lcd.setCursor(SIX, ONE);
+    char buffer[TWO];
+    lcd.print(itoa(cycleTimeLeft, buffer, 10));
+    lcd.print(spaceStr);
+    lcd.print(minStr);
+    delay(6000);
   }
-  digitalWrite(waterDrainPin, LOW);
-  waterLevelReached = false;
+  digitalWrite(motorControlPin, LOW);
 }
 
 void drainWater() {
@@ -167,6 +187,12 @@ void fillUpWater() {
     delay(1000);
   }
   digitalWrite(waterInletPin, LOW);
+}
+
+void incrementStage() {
+  stage  = ++stage % noOfStages;
+  selectButtonPressed = true;
+  upDownButtonPressed = true;
 }
 
 void selectValue(int *value, int numberOfValues) {
@@ -309,4 +335,3 @@ void clearRow(int row) {
     lcd.write(spaceStr);
   }
 }
-
