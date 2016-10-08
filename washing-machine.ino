@@ -206,17 +206,20 @@ void printWashMode() {
   printTopRowIfSelectButtonPressed(topRow, FOUR, THREE);
 
   switch (selectedWashMode) {
-    case ZERO:
-      const char *bottomRow[THREE] = { washStr, plusStr, rinseStr };
-      printBottomRowIfChangeButtonPressed(bottomRow, THREE, THREE);
+    case ZERO: {
+        const char *bottomRow[THREE] = { washStr, plusStr, rinseStr };
+        printBottomRowIfChangeButtonPressed(bottomRow, THREE, THREE);
+      }
       break;
-    case ONE:
-      const char *bottomRow[ONE] = { washStr };
-      printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+    case ONE: {
+        const char *bottomRow[ONE] = { washStr };
+        printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+      }
       break;
-    case TWO:
-      const char *bottomRow[ONE] = { rinseStr };
-      printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+    case TWO: {
+        const char *bottomRow[ONE] = { rinseStr };
+        printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+      }
       break;
   }
 }
@@ -226,17 +229,20 @@ void printWaterLevel() {
   printTopRowIfSelectButtonPressed(topRow, FOUR, TWO);
 
   switch (selectedWaterLevel) {
-    case ZERO:
-      const char *bottomRow[ONE] = { lowStr };
-      printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+    case ZERO: {
+        const char *bottomRow[ONE] = { lowStr };
+        printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+      }
       break;
-    case ONE:
-      const char *bottomRow[ONE] = { mediumStr };
-      printBottomRowIfChangeButtonPressed(bottomRow, ONE, FIVE);
+    case ONE: {
+        const char *bottomRow[ONE] = { mediumStr };
+        printBottomRowIfChangeButtonPressed(bottomRow, ONE, FIVE);
+      }
       break;
-    case TWO:
-      const char *bottomRow[ONE] = { highStr };
-      printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+    case TWO: {
+        const char *bottomRow[ONE] = { highStr };
+        printBottomRowIfChangeButtonPressed(bottomRow, ONE, SIX);
+      }
       break;
   }
 }
