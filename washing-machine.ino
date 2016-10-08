@@ -148,7 +148,13 @@ void drainWater() {
   const char *topRow[THREE] = { drainStr, spaceStr, waterStr };
   printTopRow(topRow, THREE, ONE);
 
-  while (digitalRead(drainSensorPin) == LOW) {
+  while (true) {
+    if (digitalRead(drainSensorPin) == HIGH
+        && digitalRead(lowSensorPin) == HIGH
+        && digitalRead(midSensorPin) == HIGH
+        && digitalRead(highSensorPin) == HIGH) {
+      break;
+    }
     digitalWrite(waterDrainPin, HIGH);
     delay(5000);
   }
