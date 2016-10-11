@@ -58,10 +58,14 @@
 </layers>
 <board>
 <plain>
-<wire x1="-0.5" y1="-1.25" x2="107.62" y2="-1.25" width="0" layer="20"/>
-<wire x1="107.62" y1="-1.25" x2="107.37" y2="84.56" width="0" layer="20"/>
-<wire x1="107.37" y1="84.56" x2="-0.5" y2="84.56" width="0" layer="20"/>
-<wire x1="-0.5" y1="84.56" x2="-0.5" y2="-1.25" width="0" layer="20"/>
+<wire x1="-2.5" y1="-2.25" x2="109.62" y2="-2.5" width="0" layer="20"/>
+<wire x1="109.62" y1="-2.5" x2="109.62" y2="87.81" width="0" layer="20"/>
+<wire x1="109.62" y1="87.81" x2="-2.5" y2="87.81" width="0" layer="20"/>
+<wire x1="-2.5" y1="87.81" x2="-2.5" y2="-2.25" width="0" layer="20"/>
+<hole x="-0.25" y="0" drill="2.8"/>
+<hole x="-0.5" y="85.75" drill="2.8"/>
+<hole x="107.5" y="85.75" drill="2.8"/>
+<hole x="107.5" y="-0.25" drill="2.8"/>
 </plain>
 <libraries>
 <library name="rcl">
@@ -2536,8 +2540,8 @@ design rules under a new name.</description>
 <wire x1="105.98" y1="83.05" x2="10.41" y2="83.05" width="0.5" layer="16"/>
 <wire x1="106.045" y1="82.89" x2="105.98" y2="83.05" width="0.5" layer="16"/>
 <wire x1="106.045" y1="43.1125" x2="106.045" y2="82.89" width="0.5" layer="16"/>
-<wire x1="80.645" y1="43.1125" x2="106.045" y2="43.1125" width="0.5" layer="16"/>
-<wire x1="78.4225" y1="40.005" x2="80.645" y2="43.1125" width="0.5" layer="16"/>
+<wire x1="81.645" y1="43.1125" x2="106.045" y2="43.1125" width="0.5" layer="16"/>
+<wire x1="78.4225" y1="40.005" x2="81.645" y2="43.1125" width="0.5" layer="16"/>
 <wire x1="78.4225" y1="40.005" x2="78.2" y2="39.72" width="0.5" layer="16"/>
 </signal>
 <signal name="+5V">
@@ -2836,9 +2840,9 @@ design rules under a new name.</description>
 <contactref element="K2" pad="A2"/>
 <contactref element="D2" pad="A"/>
 <wire x1="71.12" y1="13.97" x2="66.04" y2="8.89" width="0.5" layer="16"/>
-<wire x1="77.47" y1="13.97" x2="78.105" y2="14.605" width="0.254" layer="16"/>
-<wire x1="71.12" y1="13.97" x2="77.47" y2="13.97" width="1" layer="16"/>
-<wire x1="78.105" y1="14.605" x2="78.2" y2="14.89" width="1" layer="16"/>
+<wire x1="77.47" y1="13.97" x2="78.105" y2="14.605" width="0.5" layer="16"/>
+<wire x1="71.12" y1="13.97" x2="77.47" y2="13.97" width="0.5" layer="16"/>
+<wire x1="78.105" y1="14.605" x2="78.2" y2="14.89" width="0.5" layer="16"/>
 </signal>
 <signal name="N$19">
 <contactref element="Q3" pad="B"/>
